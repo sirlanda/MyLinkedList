@@ -12,8 +12,6 @@ public class MyLinkedList<E> {
     private Node currentNode;
     private Node newNode;
     private int size;
-    
-    private E element;
 
     /**
      * Constructs an empty list
@@ -50,7 +48,7 @@ public class MyLinkedList<E> {
      * @return true if the list contains the specified element. Returns false if
      * the list does not contain the specified element.
      */
-    public <E> boolean contains(E data) {
+    public boolean contains(E data) {
         currentNode = getFirstNode();
         if (currentNode == null) {
             return false;
@@ -88,7 +86,7 @@ public class MyLinkedList<E> {
      *
      * @param data element to remove.
      */
-    public <E> void removeByData(E data) {
+    public void removeByData(E data) {
         if (contains(data)) {
             removeNode(currentNode);
         } else {
@@ -126,7 +124,7 @@ public class MyLinkedList<E> {
      * @return the index of the <b>first occurence</b> of the specified element.
      * Returns <b>-1</b> if the list does <b>not</b> contain the element.
      */
-    public int getIndexOf(Object obj) {
+    public int getIndexOf(E obj) {
         int index = 0;
         if (contains(obj)) {
             currentNode = getFirstNode();
@@ -149,11 +147,9 @@ public class MyLinkedList<E> {
      * @param index index at which to insert the element.
      * @param data element to insert.
      */
-    public <E> void insert(int index, E data) {
+    public void insert(int index, E data) {
         if (isFirstNode(index) && size > 0) {
             insertFirstNode(data);
-        } else if (isLastNode(index)) {
-            insertLastNode(data);
         } else {
             currentNode = getNodeByIndex(index);
             newNode = new Node(data);
@@ -187,10 +183,6 @@ public class MyLinkedList<E> {
 
     private boolean isLastNode(int index) {
         return getNodeByIndex(index) == getLastNode();
-    }
-
-    private boolean isTheOnlyNode(int index) {
-        return isFirstNode(index) && isLastNode(index);
     }
 
     private Node getNodeByIndex(int index) {
@@ -238,14 +230,14 @@ public class MyLinkedList<E> {
         return head.getFirstNode();
     }
 
-    private <E> void insertFirstNode(E data) {
+    private void insertFirstNode(E data) {
         newNode = new Node(data);
         getFirstNode().setPreviousNode(newNode);
         newNode.setNextNode(getFirstNode());
         setFirstNode(newNode);
     }
 
-    private <E> void insertLastNode(E data) {
+    private void insertLastNode(E data) {
         newNode = new Node(data, getLastNode(), null);
         getLastNode().setNextNode(newNode);
         setLastNode(newNode);
