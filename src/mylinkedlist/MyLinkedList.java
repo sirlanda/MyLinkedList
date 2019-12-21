@@ -5,10 +5,9 @@ package mylinkedlist;
  * @author B.
  */
 public class MyLinkedList<E> {
-
+    
     private Head head;
     private Tail tail;
-
     private Node currentNode;
     private Node newNode;
     private int size;
