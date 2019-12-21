@@ -7,7 +7,9 @@ package mylinkedlist;
 public class Main {
 
     public static void main(String[] args) {
-        MyLinkedList lista = new MyLinkedList();
+        MyLinkedList<String> lista = new MyLinkedList<>();
+        lista.add("text");  //accepted
+        lista.add(7);       //compile time error
     }
 
 }

@@ -4,7 +4,7 @@ package mylinkedlist;
  *
  * @author B.
  */
-public class MyLinkedList {
+public class MyLinkedList<E> {
 
     private Head head;
     private Tail tail;
@@ -12,6 +12,8 @@ public class MyLinkedList {
     private Node currentNode;
     private Node newNode;
     private int size;
+    
+    private E element;
 
     /**
      * Constructs an empty list
@@ -29,7 +31,7 @@ public class MyLinkedList {
      *
      * @param data element to add.
      */
-    public <E> void add(E data) {
+    public void add(E data) {
         if (getFirstNode() == null) {
             newNode = new Node(data);
             setFirstNode(newNode);
@@ -37,7 +39,6 @@ public class MyLinkedList {
         } else {
             insertLastNode(data);
         }
-        //setLastNode(newNode);
         increaseSize();
     }
 
@@ -180,7 +181,6 @@ public class MyLinkedList {
         size = 0;
     }
 
-    //private methods
     private boolean isFirstNode(int index) {
         return getNodeByIndex(index) == getFirstNode();
     }
