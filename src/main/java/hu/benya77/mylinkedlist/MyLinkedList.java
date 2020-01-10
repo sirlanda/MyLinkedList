@@ -1,4 +1,4 @@
-package mylinkedlist;
+package hu.benya77.mylinkedlist;
 
 /**
  *
