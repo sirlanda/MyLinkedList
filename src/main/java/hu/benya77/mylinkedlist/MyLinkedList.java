@@ -8,8 +8,6 @@ public class MyLinkedList<E> {
     
     private Head<E> head;
     private Tail<E> tail;
-    private Node<E> currentNode;
-    private Node<E> newNode;
     private int size;
 
     /**
@@ -18,8 +16,6 @@ public class MyLinkedList<E> {
     public MyLinkedList() {
         this.head = new Head<>();
         this.tail = new Tail<>();
-        this.currentNode = null;
-        this.newNode = null;
         this.size = 0;
     }
 
@@ -30,7 +26,7 @@ public class MyLinkedList<E> {
      */
     public void add(E data) {
         if (getFirstNode() == null) {
-            newNode = new Node<>(data);
+            Node<E> newNode = new Node<>(data);
             setFirstNode(newNode);
             setLastNode(newNode);
         } else {
@@ -48,14 +44,19 @@ public class MyLinkedList<E> {
      * the list does not contain the specified element.
      */
     public boolean contains(E data) {
-        currentNode = getFirstNode();
-        if (currentNode == null) {
+        if (getFirstNode() == null) {
             return false;
         }
-        while (currentNode != getLastNode() && !currentNode.getData().equals(data)) {
-            currentNode = nextNode();
-        }
+        Node<E> currentNode = getNodeByData(data);
         return currentNode.getData().equals(data);
+    }
+
+    private Node<E> getNodeByData(E data) {
+        Node<E> currentNode = getFirstNode();
+        while (currentNode != getLastNode() && !currentNode.getData().equals(data)) {
+            currentNode = currentNode.getNextNode();
+        }
+        return currentNode;
     }
 
     /**
@@ -71,10 +72,10 @@ public class MyLinkedList<E> {
      * Prints the contents of the list.
      */
     public void printList() {
-        currentNode = getFirstNode();
+        Node<E> currentNode = getFirstNode();
         while (currentNode != null) {
             System.out.println(currentNode.getData());
-            currentNode = nextNode();
+            currentNode = currentNode.getNextNode();
         }
     }
 
@@ -86,7 +87,8 @@ public class MyLinkedList<E> {
      * @param data element to remove.
      */
     public void removeByData(E data) {
-        if (contains(data)) {
+        Node<E> currentNode = getNodeByData(data);
+        if (currentNode != null) {
             removeNode(currentNode);
         } else {
             throw new MyNoSuchElementException("There is no such element!");
@@ -101,7 +103,7 @@ public class MyLinkedList<E> {
      * @param index index at which to remove the element.
      */
     public void removeByIndex(int index) {
-        currentNode = getNodeByIndex(index);
+        Node<E> currentNode = getNodeByIndex(index);
         removeNode(currentNode);
     }
 
@@ -126,10 +128,10 @@ public class MyLinkedList<E> {
     public int getIndexOf(E obj) {
         int index = 0;
         if (contains(obj)) {
-            currentNode = getFirstNode();
+            Node<E> currentNode = getFirstNode();
 
             while (currentNode != null && currentNode.getData() != obj) {
-                currentNode = nextNode();
+                currentNode = currentNode.getNextNode();
                 index++;
             }
         } else {
@@ -150,10 +152,10 @@ public class MyLinkedList<E> {
         if (isFirstNode(index) && size > 0) {
             insertFirstNode(data);
         } else {
-            currentNode = getNodeByIndex(index);
-            newNode = new Node<>(data);
-            previousNode().setNextNode(newNode);
-            newNode.setPreviousNode(previousNode());
+            Node<E> currentNode = getNodeByIndex(index);
+            Node<E> newNode = new Node<>(data);
+            currentNode.getPreviousNode().setNextNode(newNode);
+            newNode.setPreviousNode(currentNode.getPreviousNode());
             currentNode.setPreviousNode(newNode);
             newNode.setNextNode(currentNode);
         }
@@ -164,12 +166,12 @@ public class MyLinkedList<E> {
      * Removes <b>every</b> element from the list.
      */
     public void clear() {
-        currentNode = getFirstNode().getNextNode();
+        Node<E> currentNode = getFirstNode().getNextNode();
         while (currentNode != getLastNode()) {
-            previousNode().setPreviousNode(null);
-            previousNode().setNextNode(null);
+            currentNode.getPreviousNode().setPreviousNode(null);
+            currentNode.getPreviousNode().setNextNode(null);
             currentNode.setPreviousNode(null);
-            currentNode = nextNode();
+            currentNode = currentNode.getNextNode();
         }
         setFirstNode(null);
         setLastNode(null);
@@ -188,9 +190,9 @@ public class MyLinkedList<E> {
         if (index < 0) {
             throw new IndexOutOfBoundsException();
         }
-        currentNode = getFirstNode();
+        Node<E> currentNode = getFirstNode();
         for (int i = 0; i < index; i++) {
-            currentNode = nextNode();
+            currentNode = currentNode.getNextNode();
         }
         return currentNode;
     }
@@ -230,14 +232,14 @@ public class MyLinkedList<E> {
     }
 
     private void insertFirstNode(E data) {
-        newNode = new Node<>(data);
+        Node<E> newNode = new Node<>(data);
         getFirstNode().setPreviousNode(newNode);
         newNode.setNextNode(getFirstNode());
         setFirstNode(newNode);
     }
 
     private void insertLastNode(E data) {
-        newNode = new Node<>(data, getLastNode(), null);
+        Node<E> newNode = new Node<>(data, getLastNode(), null);
         getLastNode().setNextNode(newNode);
         setLastNode(newNode);
     }
@@ -248,10 +250,6 @@ public class MyLinkedList<E> {
 
     private void setLastNode(Node<E> node) {
         tail.setLastNode(node);
-    }
-
-    private void setCurrentNode(Node<E> currentNode) {
-        this.currentNode = currentNode;
     }
 
     private Node<E> getLastNode() {
@@ -268,13 +266,5 @@ public class MyLinkedList<E> {
 
     private Head<E> getHead() {
         return head;
-    }
-
-    private Node<E> nextNode() {
-        return currentNode.getNextNode();
-    }
-
-    private Node<E> previousNode() {
-        return currentNode.getPreviousNode();
     }
 }
