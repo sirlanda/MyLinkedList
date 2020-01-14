@@ -4,19 +4,19 @@ package hu.benya77.mylinkedlist;
  *
  * @author B.
  */
-public class Tail {
+public class Tail<E> {
 
-    private Node lastNode;
+    private Node<E> lastNode;
 
     public Tail() {
         this.lastNode = null;
     }
 
-    public Node getLastNode() {
+    public Node<E> getLastNode() {
         return lastNode;
     }
 
-    public void setLastNode(Node lastNode) {
+    public void setLastNode(Node<E> lastNode) {
         this.lastNode = lastNode;
     }
 }

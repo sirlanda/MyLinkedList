@@ -4,19 +4,19 @@ package hu.benya77.mylinkedlist;
  *
  * @author B.
  */
-public class Head {
+public class Head<E> {
 
-    private Node firstNode;
+    private Node<E> firstNode;
 
     public Head() {
         firstNode = null;
     }
 
-    public Node getFirstNode() {
+    public Node<E> getFirstNode() {
         return firstNode;
     }
 
-    public void setFirstNode(Node firstNode) {
+    public void setFirstNode(Node<E> firstNode) {
         this.firstNode = firstNode;
     }
 

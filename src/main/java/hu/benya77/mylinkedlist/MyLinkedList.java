@@ -6,18 +6,18 @@ package hu.benya77.mylinkedlist;
  */
 public class MyLinkedList<E> {
     
-    private Head head;
-    private Tail tail;
-    private Node currentNode;
-    private Node newNode;
+    private Head<E> head;
+    private Tail<E> tail;
+    private Node<E> currentNode;
+    private Node<E> newNode;
     private int size;
 
     /**
      * Constructs an empty list
      */
     public MyLinkedList() {
-        this.head = new Head();
-        this.tail = new Tail();
+        this.head = new Head<>();
+        this.tail = new Tail<>();
         this.currentNode = null;
         this.newNode = null;
         this.size = 0;
@@ -30,7 +30,7 @@ public class MyLinkedList<E> {
      */
     public void add(E data) {
         if (getFirstNode() == null) {
-            newNode = new Node(data);
+            newNode = new Node<>(data);
             setFirstNode(newNode);
             setLastNode(newNode);
         } else {
@@ -111,7 +111,7 @@ public class MyLinkedList<E> {
      * @param index index of the element.
      * @return returns the elemen at the specified position.
      */
-    public Object get(int index) {
+    public E get(int index) {
         return getNodeByIndex(index).getData();
     }
 
@@ -151,7 +151,7 @@ public class MyLinkedList<E> {
             insertFirstNode(data);
         } else {
             currentNode = getNodeByIndex(index);
-            newNode = new Node(data);
+            newNode = new Node<>(data);
             previousNode().setNextNode(newNode);
             newNode.setPreviousNode(previousNode());
             currentNode.setPreviousNode(newNode);
@@ -184,7 +184,7 @@ public class MyLinkedList<E> {
         return getNodeByIndex(index) == getLastNode();
     }
 
-    private Node getNodeByIndex(int index) {
+    private Node<E> getNodeByIndex(int index) {
         if (index < 0) {
             throw new IndexOutOfBoundsException();
         }
@@ -195,7 +195,7 @@ public class MyLinkedList<E> {
         return currentNode;
     }
 
-    private void removeNode(Node node) {
+    private void removeNode(Node<E> node) {
         if (node != getFirstNode() && node != getLastNode()) {
             node.getPreviousNode().setNextNode(node.getNextNode());
             node.getNextNode().setPreviousNode(node.getPreviousNode());
@@ -225,36 +225,36 @@ public class MyLinkedList<E> {
         }
     }
 
-    private Node getFirstNode() {
+    private Node<E> getFirstNode() {
         return head.getFirstNode();
     }
 
     private void insertFirstNode(E data) {
-        newNode = new Node(data);
+        newNode = new Node<>(data);
         getFirstNode().setPreviousNode(newNode);
         newNode.setNextNode(getFirstNode());
         setFirstNode(newNode);
     }
 
     private void insertLastNode(E data) {
-        newNode = new Node(data, getLastNode(), null);
+        newNode = new Node<>(data, getLastNode(), null);
         getLastNode().setNextNode(newNode);
         setLastNode(newNode);
     }
 
-    private void setFirstNode(Node node) {
+    private void setFirstNode(Node<E> node) {
         head.setFirstNode(node);
     }
 
-    private void setLastNode(Node node) {
+    private void setLastNode(Node<E> node) {
         tail.setLastNode(node);
     }
 
-    private void setCurrentNode(Node currentNode) {
+    private void setCurrentNode(Node<E> currentNode) {
         this.currentNode = currentNode;
     }
 
-    private Node getLastNode() {
+    private Node<E> getLastNode() {
         return tail.getLastNode();
     }
 
@@ -266,15 +266,15 @@ public class MyLinkedList<E> {
         size--;
     }
 
-    private Head getHead() {
+    private Head<E> getHead() {
         return head;
     }
 
-    private Node nextNode() {
+    private Node<E> nextNode() {
         return currentNode.getNextNode();
     }
 
-    private Node previousNode() {
+    private Node<E> previousNode() {
         return currentNode.getPreviousNode();
     }
 }

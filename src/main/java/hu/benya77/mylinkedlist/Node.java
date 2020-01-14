@@ -7,8 +7,8 @@ package hu.benya77.mylinkedlist;
 public class Node<E> {
     
     private E data;
-    private Node next;
-    private Node prev;
+    private Node<E> next;
+    private Node<E> prev;
 
     public Node(){
         this.data = null;
@@ -22,7 +22,7 @@ public class Node<E> {
         this.next = null;
     }
     
-    public Node(E data, Node prev, Node next) {
+    public Node(E data, Node<E> prev, Node<E> next) {
         this.data = data;
         this.prev = prev;
         this.next = next;
@@ -36,19 +36,19 @@ public class Node<E> {
         this.data = item;
     }
 
-    public Node getNextNode() {
+    public Node<E> getNextNode() {
         return next;
     }
 
-    public void setNextNode(Node nextNode) {
+    public void setNextNode(Node<E> nextNode) {
         this.next = nextNode;
     }
 
-    public Node getPreviousNode() {
+    public Node<E> getPreviousNode() {
         return prev;
     }
 
-    public void setPreviousNode(Node previousNode) {
+    public void setPreviousNode(Node<E> previousNode) {
         this.prev = previousNode;
     }
 
